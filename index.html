@@ -2,68 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Super Mario Bros. Crossover</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="0; url=games.html">
+<title>Browser Games</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { height:100%; background:#0d1117; overflow:hidden;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
-  #wrap { position:fixed; inset:0; display:flex; flex-direction:column; }
-  #bar { display:flex; align-items:center; gap:10px; padding:10px 14px;
-    background:#161b22; border-bottom:1px solid #30363d; color:#e6edf3; }
-  #bar h1 { font-size:1rem; font-weight:600; }
-  #bar .tag { font-size:.72rem; color:#3fb950; border:1px solid #3fb950;
-    border-radius:10px; padding:2px 8px; white-space:nowrap; }
-  #bar .hint { margin-left:auto; font-size:.75rem; color:#8b949e; }
-  #bar a.games { font-size:.8rem; color:#58a6ff; text-decoration:none;
-    border:1px solid #58a6ff; border-radius:10px; padding:3px 10px; white-space:nowrap; }
-  #stage { flex:1; position:relative; background:#000; }
-  #stage ruffle-player { position:absolute; inset:0; width:100%; height:100%; }
-  #loading { position:absolute; inset:0; display:flex; align-items:center;
-    justify-content:center; color:#8b949e; font-size:.9rem; background:#000; z-index:5; }
+  html,body{height:100%;margin:0;background:#0d1117;color:#e6edf3;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    display:flex;align-items:center;justify-content:center;}
+  a{color:#58a6ff;}
 </style>
 </head>
 <body>
-<div id="wrap">
-  <div id="bar">
-    <h1>Super Mario Bros. Crossover</h1>
-    <span class="tag">Ruffle • offline-ready</span>
-    <a class="games" href="games.html">🎮 32 browser games</a>
-    <span class="hint">Play Mario levels as Link, Samus, Mega Man, Simon &amp; more</span>
-  </div>
-  <div id="stage">
-    <div id="loading">Loading game…</div>
-  </div>
-</div>
-<script src="ruffle.js"></script>
-<script>
-  // The 43 MB game file is stored as two chunks (GitHub web upload caps at 25 MB).
-  // We fetch both same-origin chunks, reassemble, and hand the blob to Ruffle.
-  const PARTS = ["smbc.part01", "smbc.part02"];
-  window.RufflePlayer = window.RufflePlayer || {};
-  window.addEventListener("DOMContentLoaded", async () => {
-    const loading = document.getElementById("loading");
-    try {
-      const ruffle = window.RufflePlayer.newest();
-      const player = ruffle.createPlayer();
-      player.style.width = "100%";
-      player.style.height = "100%";
-      document.getElementById("stage").appendChild(player);
-      const bufs = [];
-      for (let i = 0; i < PARTS.length; i++) {
-        loading.textContent = `Loading game… (${i + 1}/${PARTS.length})`;
-        const res = await fetch(PARTS[i]);
-        if (!res.ok) throw new Error("missing " + PARTS[i]);
-        bufs.push(await res.arrayBuffer());
-      }
-      const url = URL.createObjectURL(
-        new Blob(bufs, { type: "application/x-shockwave-flash" }));
-      await player.load(url);
-      loading.remove();
-    } catch (e) {
-      loading.textContent = "Could not load the game file. " + e;
-    }
-  });
-</script>
+<p>Loading games… <a href="games.html">tap here if not redirected</a></p>
+<script>location.replace('games.html');</script>
 </body>
 </html>
