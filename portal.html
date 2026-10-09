@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Super Mario Bros. Crossover</title>
+<title>Portal: The Flash Version</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { height:100%; background:#0d1117; overflow:hidden;
@@ -26,10 +26,10 @@
 <body>
 <div id="wrap">
   <div id="bar">
-    <h1>Super Mario Bros. Crossover</h1>
+    <h1>Portal: The Flash Version</h1>
     <span class="tag">Ruffle • offline-ready</span>
     <a class="games" href="games.html">🎮 32 browser games</a>
-    <span class="hint">Play Mario levels as Link, Samus, Mega Man, Simon &amp; more</span>
+    <span class="hint">40+ think-with-portals levels in 2D — Q/E or click to shoot portals</span>
   </div>
   <div id="stage">
     <div id="loading">Loading game…</div>
@@ -37,9 +37,6 @@
 </div>
 <script src="ruffle.js"></script>
 <script>
-  // The 43 MB game file is stored as two chunks (GitHub web upload caps at 25 MB).
-  // We fetch both same-origin chunks, reassemble, and hand the blob to Ruffle.
-  const PARTS = ["smbc.part01", "smbc.part02"];
   window.RufflePlayer = window.RufflePlayer || {};
   window.addEventListener("DOMContentLoaded", async () => {
     const loading = document.getElementById("loading");
@@ -49,15 +46,9 @@
       player.style.width = "100%";
       player.style.height = "100%";
       document.getElementById("stage").appendChild(player);
-      const bufs = [];
-      for (let i = 0; i < PARTS.length; i++) {
-        loading.textContent = `Loading game… (${i + 1}/${PARTS.length})`;
-        const res = await fetch(PARTS[i]);
-        if (!res.ok) throw new Error("missing " + PARTS[i]);
-        bufs.push(await res.arrayBuffer());
-      }
-      const url = URL.createObjectURL(
-        new Blob(bufs, { type: "application/x-shockwave-flash" }));
+      const res = await fetch("portal.swf");
+      if (!res.ok) throw new Error("missing portal.swf");
+      const url = URL.createObjectURL(await res.blob());
       await player.load(url);
       loading.remove();
     } catch (e) {
