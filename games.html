@@ -61,9 +61,18 @@
 </style>
 </head>
 <body>
-<nav style="position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:.55rem 0;max-width:1200px;margin:0 auto;">
+<nav style="position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:.55rem 0;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
   <a href="../" style="color:#f0cd6e;text-decoration:none;font-weight:600;">← All Apps</a>
+  <button onclick="sharePage()" aria-label="Share this page" style="background:#161b22;color:#f0cd6e;border:1px solid #30363d;border-radius:10px;width:2.4rem;height:2.4rem;font-size:1.1rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;">↗</button>
 </nav>
+<script>
+async function sharePage() {
+  const url = location.href, title = document.title;
+  if (navigator.share) { try { await navigator.share({title, url}); } catch(e){} return; }
+  try { await navigator.clipboard.writeText(url); alert('Link copied — paste it anywhere'); }
+  catch(e){ alert('Copy this link: ' + url); }
+}
+</script>
 <header>
   <h1>🎮 <span>30+</span> Games You Can Play In Your Browser</h1>
   <div class="sub">Not my games — just my favorite browser games, all in one place. No installs, all running in a tab. Tap a card to play.</div>
