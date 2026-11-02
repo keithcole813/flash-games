@@ -65,6 +65,12 @@
   .sec-head .sec-sub { color:#8b949e; font-size:.92rem; line-height:1.5; }
   .status.soon { background:#d29922; color:#0d1117; }
   .card.idea:hover { border-color:#d29922; }
+  .submenu-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; max-width:1200px; margin:28px auto 0; padding:14px 18px; background:#161b22; border:1px solid #30363d; border-radius:12px; color:#e6edf3; font-family:inherit; font-size:1.25rem; font-weight:700; text-align:left; cursor:pointer; }
+  .submenu-bar:hover { border-color:#3fb950; }
+  .submenu-bar .soon-txt { color:#d29922; }
+  .submenu-bar .submenu-count { color:#8b949e; font-weight:600; font-size:1.05rem; }
+  .submenu-bar .submenu-caret { color:#3fb950; font-size:1.15rem; line-height:1; }
+  .submenu-panel[hidden] { display:none; }
 </style>
 </head>
 <body>
@@ -84,8 +90,9 @@ async function sharePage() {
   <h1>🎮 <span>Keith Cole's</span> Games</h1>
   <div class="sub">My own games in development — thirty originals in the works — plus my favorite browser games by other creators, all in one place.</div>
   </header>
+<button class="submenu-bar" id="ideasBar" type="button" aria-expanded="false" aria-controls="ideasPanel"><span>🛠️ My Games — <span class="soon-txt">Coming Soon</span> <span class="submenu-count">(30)</span></span><span class="submenu-caret" aria-hidden="true">▸</span></button>
+<div class="submenu-panel" id="ideasPanel" hidden>
 <div class="sec-head">
-  <h2>🛠️ My Games — <span>Coming Soon</span></h2>
   <div class="sec-sub">Thirty original games I'm developing. Not playable yet — this is the drawing board. When one ships, it gets a Play button.</div>
 </div>
 <div class="grid" id="ideasGrid">
@@ -360,8 +367,10 @@ async function sharePage() {
       </div>
     </div>
 </div>
+</div>
+<button class="submenu-bar" id="curatedBar" type="button" aria-expanded="false" aria-controls="curatedPanel"><span>⭐ Favorite Curated Games by Others <span class="submenu-count">(40)</span></span><span class="submenu-caret" aria-hidden="true">▸</span></button>
+<div class="submenu-panel" id="curatedPanel" hidden>
 <div class="sec-head">
-  <h2>⭐ Favorite Curated Games by Others</h2>
   <div class="sec-sub">Not my games — just my favorite browser games, all in one place. No installs, all running in a tab. Tap a card to play.</div>
 </div>
 <div class="controls">
@@ -833,6 +842,7 @@ async function sharePage() {
     </div>
     </div>
 </div>
+</div>
 <script>
 const search = document.getElementById('search');
 const pills = document.querySelectorAll('.pill');
@@ -920,5 +930,17 @@ document.getElementById('featPlay2').addEventListener('click', () => {
 </script>
 
 <footer id="kc-site-footer" style="margin-top:40px;padding:18px 12px 24px;border-top:1px solid rgba(127,127,127,.35);text-align:center;font-size:13px;line-height:1.7;opacity:.85"><div>Curated by Keith Cole. My original games are my own work; the curated games belong to their respective creators and owners.</div><div><a href="https://keithcole813.github.io/" style="color:inherit">&#8592; Back to the main page</a></div></footer>
+<script>
+  document.querySelectorAll('.submenu-bar').forEach(function (bar) {
+    bar.addEventListener('click', function () {
+      var panel = document.getElementById(bar.getAttribute('aria-controls'));
+      var caret = bar.querySelector('.submenu-caret');
+      var open = bar.getAttribute('aria-expanded') === 'true';
+      bar.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (panel) panel.hidden = open;
+      if (caret) caret.textContent = open ? '\u25B8' : '\u25BE';
+    });
+  });
+</script>
 </body>
 </html>
